@@ -1,4 +1,4 @@
-public class Main {
+public class Q {
 
     public static int NADA = 0;
     public static int OBSTACULO_BAIXO = 1;
@@ -21,6 +21,7 @@ public class Main {
 
             learning[estadoAtual][acaoAtual] += learning_rate *
                     (recompensa(States[estadoAtual], acaoAtual) + (discount_factor * max(learning[estadoAtual+1])) - learning[estadoAtual][acaoAtual]);
+              printLearning(States, Actions, learning);
         }
 
     }
@@ -38,34 +39,37 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int[] States  = {NADA, NADA, OBSTACULO_BAIXO, NADA, OBSTACULO_CIMA, NADA, ESPINHO, MOEDA, NADA };
+        int[] States  = {NADA, NADA, OBSTACULO_BAIXO, NADA, OBSTACULO_CIMA, NADA, ESPINHO, MOEDA, NADA, OBSTACULO_BAIXO, MOEDA, MOEDA, OBSTACULO_CIMA, ESPINHO, OBSTACULO_CIMA, OBSTACULO_BAIXO, NADA };
         int[] Actions = {PULA, FRENTE};
         float[][] learning = new float[States.length][Actions.length];
 
         int quantidade_treinamento = 100;
 
         for (int x=0; x<quantidade_treinamento; x++) {
+            treinaEpisodio(States, Actions, learning);
+            printLearning(States, Actions, learning);
+        }
+    }
 
-            qlearning(States, Actions, 0.3f, 0.9f, learning);
+    public static void treinaEpisodio(int[] States, int[] Actions, float[][] learning) {
+        qlearning(States, Actions, 0.3f, 0.9f, learning);
+    }
 
+    public static void printLearning(int[] states, int[] actions, float[][] learning) {
+        for (int i = 0; i < actions.length; i++) {
 
-            for (int i = 0; i < Actions.length; i++) {
+            if (i == PULA) {
+                System.out.print("PULA   -> ");
+            } else {
+                System.out.print("FRENTE -> ");
+            }
 
-                if (i == PULA) {
-                    System.out.print("PULA   -> ");
-                } else {
-                    System.out.print("FRENTE -> ");
-                }
-
-                for (int j = 0; j < States.length; j++) {
-                    System.out.print(String.format("%.2f ", learning[j][i]));
-                }
-                System.out.println();
+            for (int j = 0; j < states.length; j++) {
+                System.out.print(String.format("%.2f ", learning[j][i]));
             }
             System.out.println();
         }
-
-
+        System.out.println();
     }
 
 
