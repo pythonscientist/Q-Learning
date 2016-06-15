@@ -26,7 +26,7 @@ public class Q {
 
     }
 
-    private static float max(float[] valoresAcoes) {
+    public static float max(float[] valoresAcoes) {
         if (valoresAcoes[PULA] > valoresAcoes[FRENTE]) {
             return valoresAcoes[PULA];
         }
